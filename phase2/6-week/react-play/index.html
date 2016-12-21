@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Hello React!</title>
+    <script src="/Users/Administrator/coding/libraries/react/build/react.js"></script>
+    <script src="/Users/Administrator/coding/libraries/react/build/react-dom.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
+  </head>
+  <body>
+    <div id="example"></div>
+    <script type="text/babel">
+       var Hello = React.createClass( {
+        
+        propTypes: {
+          name: React.PropTypes.string.isRequired,
+          sport: React.PropTypes.string.isRequired,
+        },
+
+        getDefaultProps: function() {
+          return {
+            name: "Apollo",
+            sport: "Moon-polo",
+          }
+        },      
+
+
+        render: function() {
+          return  (
+            <h1>Hello, {this.props.name}, I heard you like to play {this.props.sport}</h1>
+          )
+        },
+
+       })
+       
+       ReactDOM.render(
+         <Hello />,
+         document.getElementById("example")
+       )
+
+    </script>
+  </body>
+</html>

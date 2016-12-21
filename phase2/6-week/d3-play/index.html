@@ -1,0 +1,44 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>The HTML5 Herald</title>
+  <meta name="description" content="The HTML5 Herald">
+  <meta name="author" content="SitePoint">
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script src="d3.min.js"></script>
+
+  <!--[if lt IE 9]>
+  <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+</head>
+
+<body>
+<script>
+var width = 600;
+var height = 1600;
+
+var vis = d3.select("body").append("svg")
+    .attr("width", width).attr("height", height);
+
+d3.json("wards-chi.json", function(map) {
+  var projection = d3.geo.mercator().scale(1).translate([0,0]).precision(0);
+  var path = d3.geo.path().projection(projection);
+  var bounds = path.bounds(map);
+
+  var scale = 1.0 / Math.max((bounds[1][0] - bounds[0][0]) / width,
+      (bounds[1][1] - bounds[0][1]) / height);
+  var transl = [(width - scale * (bounds[1][0] + bounds[0][0])) / 2,
+      (height - scale * (bounds[1][1] + bounds[0][1])) / 2];
+  projection.scale(scale).translate(transl);
+
+  vis.selectAll("path").data(map.features).enter().append("path")
+    .attr("d", path)
+    .style("fill", "none")
+    .style("stroke", "black");
+});
+</script>
+</body>
+</html>
